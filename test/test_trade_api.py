@@ -1,7 +1,8 @@
 import unittest
 
 from flask import json
-from src.task1.app import app
+from src.task1.app import create_app
+from src.task1.config import TestingConfig
 from src.task1.extensions import db
 
 
@@ -28,14 +29,13 @@ def get_headers(auth=True):
 
 class TradeApiTestCase(unittest.TestCase):
     def setUp(self):
-        app.config['TESTING'] = True
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-        self.client = app.test_client()
-        with app.app_context():
+        self.app = create_app(TestingConfig)
+        self.client = self.app.test_client()
+        with self.app.app_context():
             db.create_all()
 
     def tearDown(self):
-        with app.app_context():
+        with self.app.app_context():
             db.session.remove()
             db.drop_all()
 

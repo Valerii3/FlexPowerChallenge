@@ -1,10 +1,6 @@
-
-from sqlalchemy import Column, Integer, String, DateTime
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-from flask_marshmallow import Marshmallow, Schema, fields, validate
-from extensions import db, ma
-
+from sqlalchemy import Column, Integer, String, DateTime, Date
+from flask_marshmallow import Schema
+from src.task1.extensions import db
 
 
 class Trade(db.Model):
@@ -14,16 +10,15 @@ class Trade(db.Model):
     price = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
     direction = Column(String, nullable=False)
-    delivery_day = Column(DateTime, nullable=False)
+    delivery_day = Column(Date, nullable=False, index=True)
     delivery_hour = Column(Integer, nullable=False)
-    trader_id = Column(String, nullable=False)
-    execution_time = Column(DateTime, default=datetime.utcnow)
+    trader_id = Column(String, nullable=False, index=True)
+    execution_time = Column(DateTime, nullable=False)
 
 
 class TradeSchema(Schema):
     class Meta:
         fields = ('id', 'price', 'quantity', 'direction', 'delivery_day', 'delivery_hour', 'trader_id', 'execution_time')
-
 
 
 trade_schema = TradeSchema()
