@@ -1,14 +1,34 @@
+import os
 from datetime import datetime
 
 from flask import Flask, jsonify, request
-from sqlalchemy import SQLAlchemy
-from models import db
+
+from extensions import db, ma
 from task1.models import Trade, trades_schema
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
+
+USER_DATA = {
+    "Username": "Password"
+}
+
+@auth.verify_password
+def verify(username, password):
+    if not (username and password):
+        return False
+    return USER_DATA.get(username) == password
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'trades.db')
+
+db.init_app(app)
+ma.init_app(app)
 
 
 @app.route('/v1/trades', methods=['GET'])
+@auth.login_required
 def get_trades():
     trader_id = request.args.get('trader_id')
     delivery_day = request.args.get('delivery_day')
@@ -29,6 +49,7 @@ def get_trades():
 
 
 @app.route('/v1/trades', methods=['POST'])
+@auth.login_required
 def post_trade():
     trade_data = request.json
 
@@ -50,3 +71,5 @@ def post_trade():
         return jsonify({'status_code': 400, 'message': str(e)}), 400
 
 
+if __name__ == '__main__':
+    app.run(debug=True)
