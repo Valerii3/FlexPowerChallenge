@@ -3,6 +3,7 @@ from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
 
 USER_DATA = {
+    "Admin": "Password",
     "Username": "Password"
 }
 

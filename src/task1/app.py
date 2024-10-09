@@ -11,6 +11,9 @@ def create_app(config_class=DevelopmentConfig):
     db.init_app(app)
     ma.init_app(app)
 
+    with app.app_context():
+        db.create_all()
+
     app.register_blueprint(trade_bp, url_prefix='/v1')
 
     return app
