@@ -42,7 +42,7 @@ For this task, I reused most of the functions from Task 3. I chose `Streamlit` f
 6) `docker-compose up listener` will execute the scipt which triggers cron.
 7) `docker-compose run cli_app [trader_id] --start_day=[optional] --end_day=[optional]` will run the third task.
 8)  `docker-compose run streamlit_app` is already running as well. 
-    You can check by using: `docker-compose logs flask_app` and click on the links. 
+    You can check by using: `docker-compose logs streamlit_app` and click on the links. 
 
 ## Manually
 1) `git clone git@github.com:Valerii3/FlexPowerChallenge.git`
