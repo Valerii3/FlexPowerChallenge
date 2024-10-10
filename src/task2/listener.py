@@ -91,5 +91,4 @@ if __name__ == '__main__':
     uncomment next line, and it will add trades to the database :)
         upload_trades(PATH + "epex_trades_20230220.csv")
     """
-    upload_trades(PATH + "epex_trades_20230220.csv")
-  #  main()
+    main()
