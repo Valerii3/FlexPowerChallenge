@@ -48,7 +48,7 @@ def upload_trades(file_path):
                 response = requests.post(
                     API_URL, json=trade_data, auth=HTTPBasicAuth(USERNAME, PASSWORD))
 
-                if response.status_code == 201:
+                if response.status_code == 200:
                     print(f"Successfully uploaded trade {row['id']}")
                 else:
                     print(
@@ -89,4 +89,5 @@ if __name__ == '__main__':
     uncomment next line, and it will add trades to the database :)
         upload_trades(PATH + "epex_trades_20230220.csv")
     """
-    main()
+    upload_trades(PATH + "epex_trades_20230220.csv")
+  #  main()

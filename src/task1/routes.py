@@ -44,6 +44,10 @@ def post_trade():
         return jsonify({'status_code': 400, 'message': 'Invalid direction. Must be "buy" or "sell".'}), 400
 
     try:
+        existing_trade = Trade.query.filter_by(id=trade_data['id']).first()
+        if existing_trade:
+            return jsonify({'status_code': 400, 'message': 'Trade with this ID already exists.'}), 400
+
         new_trade = Trade(
             id=trade_data['id'],
             price=trade_data['price'],
