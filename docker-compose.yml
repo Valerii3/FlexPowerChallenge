@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  flask_app:
+    build: .
+    command: flask run --host=0.0.0.0 --port=5000
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=src/task1/app.py
+    volumes:
+      - .:/app
+
+  listener:
+    build: .
+    command: bash src/task2/setup_cron.sh
+    depends_on:
+      - flask_app
+    environment:
+      - API_URL=http://flask_app:5000/v1/trades
+    volumes:
+      - .:/app
+
+  cli_app:
+    build: .
+    # You should replace 'arg1 arg2' with actual arguments or environment variables
+    command: python src/task3/cli_app.py trader_1 2023-02-28
+    depends_on:
+      - flask_app
+    environment:
+      - API_URL=http://flask_app:5000/v1/trades
+    volumes:
+      - .:/app
+
+  streamlit_app:
+    build: .
+    command: streamlit run src/task4/web_app.py
+    ports:
+      - "8501:8501"
+    depends_on:
+      - flask_app
+    environment:
+      - API_URL=http://flask_app:5000/v1/trades
+    volumes:
+      - .:/app
+
+  test_service:
+    build: .
+    command: python -m unittest discover test
+    depends_on:
+      - flask_app
+    volumes:
+      - .:/app

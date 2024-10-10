@@ -5,10 +5,12 @@ import requests
 import pandas as pd
 from requests.auth import HTTPBasicAuth
 
+from src.task1.config import API_URL
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 PATH = os.path.join(current_dir, "../resources/")
-API_URL = "http://localhost:5000/v1/trades"
+
 
 # It's better to store in some config file or environment variable, but for simplicity I will keep it here
 USERNAME = "Admin"
