@@ -31,13 +31,44 @@ For this task, I reused most of the functions from Task 3. I chose `Streamlit` f
 
 ## Dockerized
 1) `git clone git@github.com:Valerii3/FlexPowerChallenge.git`
-2) `cd FlexPowerChallenge`
+2) `cd FlexPowerChallenge/`
 3) `docker-compose up --build -d`
-4) Now the service is already running and available in your browser. You can check by using: `docker-compose logs flask_app` and click on the links. 
-To test first task, I already filled database with some synthetic data, you can go to PostMan and play with get and post methods. Use following credentials: **Admin** **Password**
+4) Now the service is already running and available in your browser. 
+
+   You can check by using: `docker-compose logs flask_app` and click on the links. 
+   To test first task, I already filled database with some synthetic data, you can go to `PostMan` and play with get and post methods. 
+   Use following credentials for login and password: **Admin** **Password** 
 5) `docker-compose run test_service` will run all the tests within the `test` directory.
-6) `docker-compose run streamlit_app` is already running as well. You can check by using: `docker-compose logs flask_app` and click on the links. 
-7) `docker-compose up listener` will execute the scipt which triggers cron.
-8) `docker-compose run cli_app [trader_id] --start_day=[optional] --end_day=[optional]` will run the third task.
+6) `docker-compose up listener` will execute the scipt which triggers cron.
+7) `docker-compose run cli_app [trader_id] --start_day=[optional] --end_day=[optional]` will run the third task.
+8)  `docker-compose run streamlit_app` is already running as well. 
+    You can check by using: `docker-compose logs flask_app` and click on the links. 
+
+## Manually
+1) `git clone git@github.com:Valerii3/FlexPowerChallenge.git`
+2) `cd FlexPowerChallenge/`
+3) Now we need to set up  thevirtual environment and install the dependencies:
+   ```
+   python3 -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   venv\Scripts\activate  # On Windows
+   pip install -r requirements.txt
+4) Now if you are using `PyCharm`, you can use the UI to run the files. For `cli_app` don't forget to pass the parameters into the the configuration file.
+5) If you use terminal, python sometimes cant find the necessary `src` packages.
+   To fix it, paste it into the terminal: `export PYTHONPATH="/path/to/repo/FlexPowerChallenge:$PYTHONPATH"
+6) `python3 src/task1/app.py` will run the server
+7) `python3` src/task2/listener.py` will run the script. You can uncomment line and fill the database with some data.
+8)  `./src/task2/setup_cron.sh ` will run the second task. If its already running, the correspoding message will be displayed.
+9) `python3 src/task3/cli_app.py [trader_id] --start_day=[YYYY-MM-DD] --start_day=[YYYY-MM-DD]` will run the third task. 
+10) `streamlit run src/task4/web_app.py` will run the browser app with nice UI :)
+
+## DATA
+I filled `trade.db` with some sample data. The available dates are `2023-02-27` and `2023-02-28`, and there are only three unique trader IDs: `trader_1`, `trader_2`, and `trader_3`.
+If you drop the database, you can repopulate it using the listener.py script. However, it won't add new records at the moment, because it would create duplicates.
+
+
+`
+   
+
 
 
