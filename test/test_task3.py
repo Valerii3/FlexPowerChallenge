@@ -3,8 +3,8 @@ import unittest
 from datetime import datetime, timedelta
 from unittest.mock import patch
 
-from task3.parser import get_yesterday, parse_arguments
-from task3.statistics_calculator import process_trades
+from src.task3.parser import get_yesterday, parse_arguments
+from src.task3.statistics_calculator import process_trades
 
 
 class TestGetYesterday(unittest.TestCase):
